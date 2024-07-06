@@ -1,0 +1,18 @@
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.content {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    max-width: 80vw;
+    max-height: 80vh;
+    overflow: hidden;
+}

@@ -1,5 +1,8 @@
+import css from "./ErrorMessage.module.css";
+
 export default function ErrorMessage({ message }) {
+    console.log(message);
     return (
-        <p>Something seems to have happened, please reload this page!</p>
-    )
+        <p className={css.message}>{message}</p>
+    );
 }

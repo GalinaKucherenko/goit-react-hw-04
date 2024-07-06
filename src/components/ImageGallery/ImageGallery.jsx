@@ -1,13 +1,18 @@
+import css from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
 
-export default function ImageGallery(items) {
+export default function ImageGallery({ items }) {
+    if (!items || items.length === 0) {
+        return <p>No images found.</p>;
+    }
+
     return (
-        <div>
-            <ul>
-                <li>
-                    <ImageCard {items} />
+        <ul className={css.imageGallery}>
+            {items.map((image) => (
+                <li key={image.id} className={css.imageItem}>
+                    <ImageCard image={image} />
                 </li>
-            </ul>
-        </div>
-    )
+            ))}
+        </ul>
+    );
 }

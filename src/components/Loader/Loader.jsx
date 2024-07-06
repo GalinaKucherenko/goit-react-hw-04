@@ -1,16 +1,11 @@
 import { Audio } from 'react-loader-spinner';
+import css from "./Loader.module.css";
 
-export default function Loader(audio) {
+export default function Loader({ loading }) {
     return (
-        <Audio {audio}
-            height="80"
-            width="80"
-            radius="9"
-            color="green"
-            ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
-        />
-    )
+        <div className={css.loader}>
+            {loading && <Audio height="100" width="100" color='grey' ariaLabel='loading' />}
+        </div>
+    );
 }
 
