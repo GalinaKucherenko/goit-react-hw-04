@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ImageModal from "../ImageModal/ImageModal";
@@ -8,6 +7,7 @@ import Loader from "../Loader/Loader";
 import SearchBar from "../SearchBar/SearchBar";
 import { fetchImages } from "../articles-api";
 import css from "./App.module.css";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function App() {
     const [images, setImages] = useState([]);
@@ -19,21 +19,7 @@ export default function App() {
     const [modalImageUrl, setModalImageUrl] = useState("");
     const [modalAltDescription, setModalAltDescription] = useState("");
 
-    useEffect(() => {
-        async function getImages() {
-            try {
-                setLoading(true);
-                const data = await fetchImages('picture', 1);
-                setImages(data);
-            } catch (error) {
-                setError("Something seems to have happened, please reload this page!");
-            } finally {
-                setLoading(false);
-            }
-        }
-        getImages();
-    }, []);
-
+    // Функція для обробки пошуку
     const handleSearch = async (newTopic) => {
         setImages([]);
         setPage(1);
@@ -41,20 +27,24 @@ export default function App() {
         setError("");
     };
 
+    // Функція для завантаження більше зображень
     const handleLoadMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
 
+    // Відкриття модального вікна
     const openModal = (imageUrl, altDescription) => {
         setModalImageUrl(imageUrl);
         setModalAltDescription(altDescription);
         setModalIsOpen(true);
     };
 
+    // Закриття модального вікна
     const closeModal = () => {
         setModalIsOpen(false);
     };
 
+    // Виконуємо запит лише при зміні теми або сторінки
     useEffect(() => {
         if (topic === '') {
             return;
@@ -69,8 +59,8 @@ export default function App() {
                     return [...prevImages, ...data];
                 });
             } catch (error) {
-                toast.error("ERROR!", { position: 'top-left' });
-                setError("Something seems to have happened, please reload this page!");
+                toast.error("Something seems to have happened, please reload this page!", {position: "top-left"});
+                setError();
             } finally {
                 setLoading(false);
             }
@@ -79,7 +69,7 @@ export default function App() {
     }, [page, topic]);
 
     return (
-        <div className={css.container}>
+        <div className={css.app}>
             <SearchBar onSearch={handleSearch} />
             {error ? (
                 <ErrorMessage message={error} />

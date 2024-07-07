@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import css from "./SearchBar.module.css";
+import toast, { Toaster } from 'react-hot-toast';
 
 const validationSchema = Yup.object().shape({
     topic: Yup.string()
@@ -15,8 +16,15 @@ export default function SearchBar({ onSearch }) {
                 initialValues={{ topic: "" }}
                 validationSchema={validationSchema}
                 onSubmit={(values, actions) => {
-                    onSearch(values.topic);
-                    actions.resetForm();
+                    const trimmedTopic = values.topic.trim();
+                    if (trimmedTopic === "") {
+                        toast.error("Can not be empty");
+                    } else if (trimmedTopic.length < 3) {
+                        toast.error("Minimum 3 letters");
+                    } else {
+                        onSearch(trimmedTopic);
+                        actions.resetForm();
+                    }
                 }}
             >
                 {({ errors, touched }) => (
@@ -29,11 +37,12 @@ export default function SearchBar({ onSearch }) {
                         />
                         <button className={css.btn} type="submit">Search</button>
                         {errors.topic && touched.topic ? (
-                            <div>{errors.topic}</div>
+                            <div className={css.error}>{errors.topic}</div>
                         ) : null}
                     </Form>
                 )}
             </Formik>
+            <Toaster />
         </div>
     );
 }
