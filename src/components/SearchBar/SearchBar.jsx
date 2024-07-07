@@ -7,7 +7,6 @@ export default function SearchBar({ onSearch }) {
             <Formik
                 initialValues={{ topic: "" }}
                 onSubmit={(values, actions) => {
-                    console.log("Search term submitted:", values.topic); // Added console.log
                     onSearch(values.topic);
                     actions.resetForm();
                 }}

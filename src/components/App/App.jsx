@@ -7,6 +7,7 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import Loader from "../Loader/Loader";
 import SearchBar from "../SearchBar/SearchBar";
 import { fetchImages } from "../articles-api";
+import css from "./App.module.css";
 
 export default function App() {
     const [images, setImages] = useState([]);
@@ -78,7 +79,7 @@ export default function App() {
     }, [page, topic]);
 
     return (
-        <div>
+        <div className={css.container}>
             <SearchBar onSearch={handleSearch} />
             {error ? (
                 <ErrorMessage message={error} />
